@@ -633,19 +633,44 @@ function showQuizQuestion(){
     document.getElementById('answerInput').value='';document.getElementById('answerInput').focus();
 }
 
+/* ── Levenshtein distance ── */
+function levenshtein(a,b){
+    const m=a.length,n=b.length;
+    const dp=[];
+    for(let i=0;i<=m;i++){dp[i]=[];for(let j=0;j<=n;j++)dp[i][j]=i===0?j:j===0?i:0;}
+    for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+    return dp[m][n];
+}
+function normStr(s){return s.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\[\]]/g,'').replace(/\s+/g,' ').trim();}
+function sortedWords(s){return normStr(s).split(' ').sort().join(' ');}
+function smartMatch(input,correct){
+    const variants=correct.split(/[,\/]/).map(v=>v.trim()).filter(Boolean);
+    const inp=normStr(input);
+    const inpS=sortedWords(input);
+    for(const variant of variants){
+        const cor=normStr(variant);
+        const corS=sortedWords(variant);
+        if(inp===cor||inpS===corS)return true;
+        const thr=cor.replace(/\s/g,'').length<=6?1:2;
+        if(levenshtein(inp,cor)<=thr)return true;
+        if(levenshtein(inpS,corS)<=thr)return true;
+    }
+    return false;
+}
 function checkAnswer(){
     const f=getFilteredWords(),w=f[currentIndex],ans=document.getElementById('answerInput').value.trim();
     if(!ans)return;
-    const de=quizMode==='quiz-de-pl',ok=ans.toLowerCase()===(de?w.polish:w.german).toLowerCase();
+    const de=quizMode==='quiz-de-pl';
+    const correct=de?w.polish:w.german;
+    const ok=smartMatch(ans,correct);
     if(ok)w.correct++;else w.wrong++;saveData();
     const rb=document.getElementById('resultBox');
     rb.className='result '+(ok?'correct':'wrong');
-    rb.innerHTML=`<div class="result-title">${ok?'✓ Dobrze!':'✗ Źle'}</div>${!ok?`<div style="color:var(--text2);">Twoja: <strong>${ans}</strong><br>Prawidłowo: <strong style="color:var(--green);">${de?w.polish:w.german}</strong>${w.pron?`<br><span style="color:var(--text3);font-size:0.85em;">${w.pron}</span>`:''}` :''}`;
+    rb.innerHTML=`<div class="result-title">${ok?'✓ Dobrze!':'✗ Źle'}</div>${!ok?`<div style="color:var(--text2);">Twoja: <strong>${ans}</strong><br>Prawidłowo: <strong style="color:var(--green);">${correct}</strong>${w.pron?`<br><span style="color:var(--text3);font-size:0.85em;">${w.pron}</span>`:''}` :''}`;
     document.getElementById('answerSection').classList.add('hidden');
     document.getElementById('resultSection').classList.remove('hidden');
     setTimeout(()=>document.getElementById('nextQuizBtn').focus(),100);
 }
-
 function nextQuiz(){const f=getFilteredWords();currentIndex=(currentIndex+1)%f.length;showQuizQuestion();}
 
 /* ═══ AKTYWNE PRZYPOMINANIE ═══ */
