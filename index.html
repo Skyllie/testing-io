@@ -23,6 +23,12 @@
             --red-soft: #fdecea;
             --orange: #d4691e;
             --orange-soft: #fef0e6;
+            --blue: #1a5276;
+            --blue-soft: #d6eaf8;
+            --purple: #6c3483;
+            --purple-soft: #e8daef;
+            --teal: #117a65;
+            --teal-soft: #d1f2eb;
             --radius: 14px;
             --radius-sm: 8px;
             --shadow: 0 2px 12px rgba(0,0,0,0.07);
@@ -195,8 +201,12 @@
         /* Section badge */
         .section-badge { display: inline-block; font-size: 0.7em; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
         .badge-vocab { background: #fce4ec; color: #c2185b; }
-        .badge-gram { background: #e8eaf6; color: #3949ab; }
+        .badge-grammar { background: #e8eaf6; color: #3949ab; }
         .badge-listen { background: #e0f2f1; color: #00695c; }
+        .badge-reading { background: #fff3e0; color: #e65100; }
+        .badge-english { background: #f3e5f5; color: #6a1b9a; }
+        .badge-writing { background: #e8f5e9; color: #2e7d32; }
+        .badge-speaking { background: #e3f2fd; color: #1565c0; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -218,7 +228,7 @@
     <header class="site-header">
         <span class="flag">🎭</span>
         <h1>The <span>Arts</span></h1>
-        <p class="subtitle">Unit 3 · Sections 3.1–3.3 · Fiszki · Quizy · Aktywne przypominanie</p>
+        <p class="subtitle">Unit 3 · Sections 3.1–3.8 · Fiszki · Quizy · Aktywne przypominanie</p>
     </header>
 
     <div id="addMode" class="card">
@@ -354,8 +364,12 @@
                     <div style="display:flex;gap:8px;flex-wrap:wrap;" id="catBtns">
                         <button class="btn-outline cat-btn" data-cat="all" onclick="setCat(this)">Wszystkie</button>
                         <button class="btn-outline cat-btn" data-cat="vocab" onclick="setCat(this)">🎭 3.1 Vocabulary</button>
-                        <button class="btn-outline cat-btn" data-cat="grammar" onclick="setCat(this)">📖 3.2 Grammar</button>
+                        <button class="btn-outline cat-btn" data-cat="grammar" onclick="setCat(this)">📖 3.2+3.5 Grammar</button>
                         <button class="btn-outline cat-btn" data-cat="listen" onclick="setCat(this)">🎧 3.3 Listening</button>
+                        <button class="btn-outline cat-btn" data-cat="reading" onclick="setCat(this)">📚 3.4 Reading</button>
+                        <button class="btn-outline cat-btn" data-cat="english" onclick="setCat(this)">🔤 3.6 Use of English</button>
+                        <button class="btn-outline cat-btn" data-cat="writing" onclick="setCat(this)">✍️ 3.7 Writing</button>
+                        <button class="btn-outline cat-btn" data-cat="speaking" onclick="setCat(this)">🗣️ 3.8 Speaking</button>
                         <button class="btn-outline cat-btn" data-cat="custom" onclick="setCat(this)">📝 Moje słowa</button>
                     </div>
                 </div>
@@ -421,16 +435,16 @@
 /* ═══ MAIN APP ═══ */
 let words=[], unknownWords=[], currentIndex=0, currentMode='add', quizMode='', isFlipped=false, showUnknownOnly=false, shuffledWords=[];
 
-const WORDS_VERSION = 4;
+const WORDS_VERSION = 5;
 
-// ─── SŁOWNICTWO: 3.1 Vocabulary, 3.2 Grammar, 3.3 Listening ───
+// ─── SŁOWNICTWO: 3.1–3.8 ───
 const initialWords=[
     // ══ 3.1 VOCABULARY ══
     {english:'acting',polish:'gra aktorska',pron:'/ˈæktɪŋ/',cat:'vocab'},
     {english:'addictive',polish:'uzależniający',pron:'/əˈdɪktɪv/',cat:'vocab'},
     {english:'animation',polish:'animacja, kreskówka',pron:'/ˌænɪˈmeɪʃn/',cat:'vocab'},
     {english:'audiences',polish:'widzowie, publiczność',pron:'/ˈɔːdiənsɪz/',cat:'vocab'},
-    {english:'binge-watch',polish:'oglądać filmy/seriale nalogowo',pron:'/bɪndʒ wɒtʃ/',cat:'vocab'},
+    {english:'binge-watch',polish:'oglądać filmy/seriale nałogowo',pron:'/bɪndʒ wɒtʃ/',cat:'vocab'},
     {english:'bookworm',polish:'mól książkowy',pron:'/ˈbʊkwɜːm/',cat:'vocab'},
     {english:'chapter',polish:'rozdział',pron:'/ˈtʃæptə/',cat:'vocab'},
     {english:'character',polish:'bohater',pron:'/ˈkærəktə/',cat:'vocab'},
@@ -514,6 +528,80 @@ const initialWords=[
     {english:'sculpture',polish:'rzeźba',pron:'/ˈskʌlptʃə/',cat:'listen'},
     {english:'slum',polish:'slumsy, dzielnica nędzy',pron:'/slʌm/',cat:'listen'},
     {english:'street art',polish:'sztuka uliczna',pron:'/striːt ɑːt/',cat:'listen'},
+
+    // ══ 3.4 READING ══
+    {english:'A-list actors',polish:'najlepiej opłacani aktorzy',pron:'/ˈeɪ lɪst ˈæktəz/',cat:'reading'},
+    {english:'anger',polish:'gniew, złość',pron:'/ˈæŋɡə/',cat:'reading'},
+    {english:'autobiography',polish:'autobiografia',pron:'/ˌɔːtəbaɪˈɒɡrəfi/',cat:'reading'},
+    {english:'biography',polish:'biografia',pron:'/baɪˈɒɡrəfi/',cat:'reading'},
+    {english:'blockbuster',polish:'przebój (książka lub film)',pron:'/ˈblɒkˌbʌstə/',cat:'reading'},
+    {english:'box office',polish:'kasa kinowa, teatralna',pron:'/ˈbɒks ˌɒfɪs/',cat:'reading'},
+    {english:'bully',polish:'znęcać się',pron:'/ˈbʊli/',cat:'reading'},
+    {english:'cause',polish:'powodować',pron:'/kɔːz/',cat:'reading'},
+    {english:'classic novel',polish:'powieść klasyczna',pron:'/ˌklæsɪk ˈnɒvəl/',cat:'reading'},
+    {english:'come out',polish:'wychodzić, pojawiać się na ekranach kin',pron:'/ˌkʌm ˈaʊt/',cat:'reading'},
+    {english:'comic book',polish:'komiks',pron:'/ˈkɒmɪk bʊk/',cat:'reading'},
+    {english:'computer-generated images',polish:'obrazy wytworzone komputerowo',pron:'/kəmˌpjuːtə ˈdʒenəreɪtɪd ˈɪmɪdʒɪz/',cat:'reading'},
+    {english:'cope with',polish:'radzić sobie',pron:'/kəʊp wɪð/',cat:'reading'},
+    {english:'crime novel',polish:'powieść kryminalna',pron:'/ˈkraɪm ˌnɒvəl/',cat:'reading'},
+    {english:'dedicate yourself to sth',polish:'poświęcać się czemuś',pron:'/ˈdedɪkeɪt jəˈself/',cat:'reading'},
+    {english:'destruction',polish:'zniszczenie',pron:'/dɪˈstrʌkʃn/',cat:'reading'},
+    {english:'escapism',polish:'eskapizm',pron:'/ɪˈskeɪpɪzm/',cat:'reading'},
+    {english:'fairy tale',polish:'bajka',pron:'/ˈfeəri teɪl/',cat:'reading'},
+    {english:'fantasy novel',polish:'powieść fantasy',pron:'/ˈfæntəsi ˌnɒvəl/',cat:'reading'},
+    {english:'find out',polish:'dowiedzieć się',pron:'/ˌfaɪnd ˈaʊt/',cat:'reading'},
+    {english:'genre',polish:'gatunek (np. literacki)',pron:'/ˈʒɒnrə/',cat:'reading'},
+    {english:'give something up',polish:'zrezygnować z czegoś',pron:'/ɡɪv ˈsʌmθɪŋ ʌp/',cat:'reading'},
+    {english:'have X-ray vision',polish:'mieć rentgen w oczach',pron:'/hæv ˈeks reɪ ˈvɪʒn/',cat:'reading'},
+    {english:'historical fiction',polish:'beletrystyka historyczna',pron:'/hɪˌstɒrɪkl ˈfɪkʃn/',cat:'reading'},
+    {english:'innocent',polish:'niewinny',pron:'/ˈɪnəsnt/',cat:'reading'},
+    {english:'invisible',polish:'niewidzialny',pron:'/ɪnˈvɪzɪbl/',cat:'reading'},
+    {english:'loss',polish:'strata',pron:'/lɒs/',cat:'reading'},
+    {english:'poem',polish:'wiersz',pron:'/ˈpəʊɪm/',cat:'reading'},
+    {english:'purpose',polish:'cel',pron:'/ˈpɜːpəs/',cat:'reading'},
+    {english:'reject',polish:'odrzucić',pron:'/rɪˈdʒekt/',cat:'reading'},
+    {english:'relate to',polish:'utożsamiać się z',pron:'/rɪˈleɪt tuː/',cat:'reading'},
+    {english:'scene',polish:'scena (fragment utworu)',pron:'/siːn/',cat:'reading'},
+    {english:'short story',polish:'opowiadanie',pron:'/ˌʃɔːt ˈstɔːri/',cat:'reading'},
+    {english:'stand up for',polish:'ująć się za',pron:'/ˌstænd ˈʌp fə/',cat:'reading'},
+    {english:'take on (a role)',polish:'przyjąć (rolę)',pron:'/ˌteɪk ˈɒn/',cat:'reading'},
+    {english:'trailer',polish:'zwiastun',pron:'/ˈtreɪlə/',cat:'reading'},
+    {english:'weird',polish:'dziwaczny',pron:'/wɪəd/',cat:'reading'},
+
+    // ══ 3.5 GRAMMAR ══
+    {english:'music award',polish:'nagroda muzyczna',pron:'/ˈmjuːzɪk əˌwɔːd/',cat:'grammar'},
+    {english:'proper',polish:'prawdziwy',pron:'/ˈprɒpə/',cat:'grammar'},
+    {english:'the charts',polish:'lista przebojów',pron:'/ðə tʃɑːts/',cat:'grammar'},
+
+    // ══ 3.6 USE OF ENGLISH ══
+    {english:'gig',polish:'występ, koncert',pron:'/ɡɪɡ/',cat:'english'},
+    {english:'perform',polish:'występować',pron:'/pəˈfɔːm/',cat:'english'},
+    {english:'put on (a play)',polish:'wystawiać (sztukę)',pron:'/ˌpʊt ˈɒn/',cat:'english'},
+    {english:'softly',polish:'cicho, delikatnie',pron:'/ˈsɒftli/',cat:'english'},
+    {english:'stage',polish:'scena (miejsce występu)',pron:'/steɪdʒ/',cat:'english'},
+    {english:'X-rated',polish:'tylko dla dorosłych',pron:'/ˈeks ˌreɪtɪd/',cat:'english'},
+
+    // ══ 3.7 WRITING ══
+    {english:'actually',polish:'właściwie',pron:'/ˈæktʃuəli/',cat:'writing'},
+    {english:'anyway',polish:'a tak w ogóle, a poza tym',pron:'/ˈeniweɪ/',cat:'writing'},
+    {english:'brush',polish:'pędzel',pron:'/brʌʃ/',cat:'writing'},
+    {english:'by the way',polish:'a tak przy okazji',pron:'/ˌbaɪ ðə ˈweɪ/',cat:'writing'},
+    {english:'disappointed',polish:'rozczarowany',pron:'/ˌdɪsəˈpɔɪntɪd/',cat:'writing'},
+    {english:'fail your driving test',polish:'oblać egzamin na prawo jazdy',pron:'/feɪl jə ˈdraɪvɪŋ test/',cat:'writing'},
+    {english:'fancy-dress party',polish:'bal przebierańców',pron:'/ˌfænsi ˈdres ˌpɑːti/',cat:'writing'},
+    {english:'Hope to see you',polish:'Mam nadzieję, że się zobaczymy',pron:'/həʊp tə ˈsiː jə/',cat:'writing'},
+    {english:'I have to say / In fact',polish:'Muszę przyznać / Rzeczywiście, faktycznie',pron:'/aɪ hæv tə ˈseɪ/',cat:'writing'},
+    {english:"I'm sorry to hear that",polish:'Przykro mi słyszeć, że',pron:"/aɪm ˈsɒri tə hɪə ðæt/",cat:'writing'},
+    {english:'improve',polish:'doskonalić',pron:'/ɪmˈpruːv/',cat:'writing'},
+    {english:'incidentally',polish:'nawiasem mówiąc',pron:'/ˌɪnsɪˈdentəli/',cat:'writing'},
+    {english:'paint',polish:'farba',pron:'/peɪnt/',cat:'writing'},
+    {english:'sympathy',polish:'współczucie',pron:'/ˈsɪmpəθi/',cat:'writing'},
+
+    // ══ 3.8 SPEAKING ══
+    {english:'in the background',polish:'w tle',pron:'/ɪn ðə ˈbækɡraʊnd/',cat:'speaking'},
+    {english:'in the foreground',polish:'na pierwszym planie',pron:'/ɪn ðə ˈfɔːɡraʊnd/',cat:'speaking'},
+    {english:'look bored/tired',polish:'wyglądać na znudzonego/zmęczonego',pron:'/lʊk bɔːd ˈtaɪəd/',cat:'speaking'},
+    {english:'pavement',polish:'chodnik',pron:'/ˈpeɪvmənt/',cat:'speaking'},
 ];
 
 function loadData(){
@@ -559,7 +647,7 @@ function getSuccessRate(w){const t=w.correct+w.wrong;return t>0?Math.round(w.cor
 function shuffleArray(arr){const s=[...arr];for(let i=s.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];}return s;}
 
 function getCatLabel(cat){
-    const map={vocab:'3.1',grammar:'3.2',listen:'3.3',custom:'📝'};
+    const map={vocab:'3.1',grammar:'3.2/3.5',listen:'3.3',reading:'3.4',english:'3.6',writing:'3.7',speaking:'3.8',custom:'📝'};
     return map[cat]||'';
 }
 
