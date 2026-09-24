@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎭 The Arts — English Vocabulary</title>
+    <title>🏠 Home sweet home — English Vocabulary</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -226,9 +226,9 @@
 <div class="container">
 
     <header class="site-header">
-        <span class="flag">🎭</span>
-        <h1>The <span>Arts</span></h1>
-        <p class="subtitle">Unit 3 · Sections 3.1–3.8 · Fiszki · Quizy · Aktywne przypominanie</p>
+        <span class="flag">🏠</span>
+        <h1>Home <span>sweet home</span></h1>
+        <p class="subtitle">Unit 4 · Sections 4.1–4.8 · Fiszki · Quizy · Aktywne przypominanie</p>
     </header>
 
     <div id="addMode" class="card">
@@ -363,13 +363,13 @@
                     <span class="lbl">Kategoria słów</span>
                     <div style="display:flex;gap:8px;flex-wrap:wrap;" id="catBtns">
                         <button class="btn-outline cat-btn" data-cat="all" onclick="setCat(this)">Wszystkie</button>
-                        <button class="btn-outline cat-btn" data-cat="vocab" onclick="setCat(this)">🎭 3.1 Vocabulary</button>
-                        <button class="btn-outline cat-btn" data-cat="grammar" onclick="setCat(this)">📖 3.2+3.5 Grammar</button>
-                        <button class="btn-outline cat-btn" data-cat="listen" onclick="setCat(this)">🎧 3.3 Listening</button>
-                        <button class="btn-outline cat-btn" data-cat="reading" onclick="setCat(this)">📚 3.4 Reading</button>
-                        <button class="btn-outline cat-btn" data-cat="english" onclick="setCat(this)">🔤 3.6 Use of English</button>
-                        <button class="btn-outline cat-btn" data-cat="writing" onclick="setCat(this)">✍️ 3.7 Writing</button>
-                        <button class="btn-outline cat-btn" data-cat="speaking" onclick="setCat(this)">🗣️ 3.8 Speaking</button>
+                        <button class="btn-outline cat-btn" data-cat="vocab" onclick="setCat(this)">🏠 4.1 Vocabulary</button>
+                        <button class="btn-outline cat-btn" data-cat="grammar" onclick="setCat(this)">📖 4.2+4.5 Grammar</button>
+                        <button class="btn-outline cat-btn" data-cat="listen" onclick="setCat(this)">🎧 4.3 Listening</button>
+                        <button class="btn-outline cat-btn" data-cat="reading" onclick="setCat(this)">📚 4.4 Reading</button>
+                        <button class="btn-outline cat-btn" data-cat="english" onclick="setCat(this)">🔤 4.6 Use of English</button>
+                        <button class="btn-outline cat-btn" data-cat="writing" onclick="setCat(this)">✍️ 4.7 Writing</button>
+                        <button class="btn-outline cat-btn" data-cat="speaking" onclick="setCat(this)">🗣️ 4.8 Speaking</button>
                         <button class="btn-outline cat-btn" data-cat="custom" onclick="setCat(this)">📝 Moje słowa</button>
                     </div>
                 </div>
@@ -435,173 +435,188 @@
 /* ═══ MAIN APP ═══ */
 let words=[], unknownWords=[], currentIndex=0, currentMode='add', quizMode='', isFlipped=false, showUnknownOnly=false, shuffledWords=[];
 
-const WORDS_VERSION = 5;
+const WORDS_VERSION = 6;
 
-// ─── SŁOWNICTWO: 3.1–3.8 ───
+// ─── SŁOWNICTWO: 4.1–4.8 ───
 const initialWords=[
-    // ══ 3.1 VOCABULARY ══
-    {english:'acting',polish:'gra aktorska',pron:'/ˈæktɪŋ/',cat:'vocab'},
-    {english:'addictive',polish:'uzależniający',pron:'/əˈdɪktɪv/',cat:'vocab'},
-    {english:'animation',polish:'animacja, kreskówka',pron:'/ˌænɪˈmeɪʃn/',cat:'vocab'},
-    {english:'audiences',polish:'widzowie, publiczność',pron:'/ˈɔːdiənsɪz/',cat:'vocab'},
-    {english:'binge-watch',polish:'oglądać filmy/seriale nałogowo',pron:'/bɪndʒ wɒtʃ/',cat:'vocab'},
-    {english:'bookworm',polish:'mól książkowy',pron:'/ˈbʊkwɜːm/',cat:'vocab'},
-    {english:'chapter',polish:'rozdział',pron:'/ˈtʃæptə/',cat:'vocab'},
-    {english:'character',polish:'bohater',pron:'/ˈkærəktə/',cat:'vocab'},
-    {english:'chat show',polish:'talk show, program dyskusyjny',pron:'/ˈtʃæt ʃəʊ/',cat:'vocab'},
-    {english:'clip',polish:'filmik, klip',pron:'/klɪp/',cat:'vocab'},
-    {english:'comedy',polish:'komedia',pron:'/ˈkɒmədi/',cat:'vocab'},
-    {english:'complex',polish:'złożony, skomplikowany',pron:'/ˈkɒmpleks/',cat:'vocab'},
-    {english:'confession',polish:'wyznanie',pron:'/kənˈfeʃn/',cat:'vocab'},
-    {english:'cooking programme',polish:'program kulinarny',pron:'/ˈkʊkɪŋ ˈprəʊɡræm/',cat:'vocab'},
-    {english:'costume',polish:'kostium',pron:'/ˈkɒstjuːm/',cat:'vocab'},
-    {english:'crime/TV drama',polish:'serial kryminalny/telewizyjny',pron:'/kraɪm ˈdraːmə/',cat:'vocab'},
-    {english:'disappointing',polish:'rozczarowujący, niezadowalający',pron:'/ˌdɪsəˈpɔɪntɪŋ/',cat:'vocab'},
-    {english:'documentary',polish:'film dokumentalny',pron:'/ˌdɒkjuˈmentri/',cat:'vocab'},
-    {english:'drama series',polish:'serial (dramat)',pron:'/ˈdraːmə ˈsɪəriːz/',cat:'vocab'},
-    {english:'embarrassing',polish:'żenujący, wprawiający w zakłopotanie',pron:'/ɪmˈbærəsɪŋ/',cat:'vocab'},
-    {english:'ending',polish:'zakończenie',pron:'/ˈendɪŋ/',cat:'vocab'},
-    {english:'engaging',polish:'wciągający, zajmujący, zabawny',pron:'/ɪnˈɡeɪdʒɪŋ/',cat:'vocab'},
-    {english:'entertaining',polish:'rozrywkowy',pron:'/ˌentəˈteɪnɪŋ/',cat:'vocab'},
-    {english:'episode',polish:'odcinek',pron:'/ˈepɪsəʊd/',cat:'vocab'},
-    {english:'excellent',polish:'doskonały, znakomity',pron:'/ˈeksələnt/',cat:'vocab'},
-    {english:'factual',polish:'oparty na faktach',pron:'/ˈfæktʃuəl/',cat:'vocab'},
-    {english:'fantasy',polish:'fantastyka',pron:'/ˈfæntəsi/',cat:'vocab'},
-    {english:'fascinating',polish:'fascynujący',pron:'/ˈfæsɪneɪtɪŋ/',cat:'vocab'},
-    {english:'game show',polish:'teleturniej',pron:'/ˈɡeɪm ʃəʊ/',cat:'vocab'},
-    {english:'gripping',polish:'pasjonujący',pron:'/ˈɡrɪpɪŋ/',cat:'vocab'},
-    {english:'horror',polish:'horror',pron:'/ˈhɒrə/',cat:'vocab'},
-    {english:'imaginative',polish:'oryginalny, pomysłowy',pron:'/ɪˈmædʒɪnətɪv/',cat:'vocab'},
-    {english:'inspiring',polish:'inspirujący, porywający',pron:'/ɪnˈspaɪərɪŋ/',cat:'vocab'},
-    {english:'light entertainment',polish:'lekka rozrywka',pron:'/laɪt ˌentəˈteɪnmənt/',cat:'vocab'},
-    {english:'live',polish:'na żywo',pron:'/laɪv/',cat:'vocab'},
-    {english:'movie',polish:'film',pron:'/ˈmuːvi/',cat:'vocab'},
-    {english:'moving',polish:'wzruszający, poruszający',pron:'/ˈmuːvɪŋ/',cat:'vocab'},
-    {english:'musical',polish:'musical',pron:'/ˈmjuːzɪkl/',cat:'vocab'},
-    {english:'news bulletin',polish:'wiadomości',pron:'/njuːz ˈbʊlɪtɪn/',cat:'vocab'},
-    {english:'novel',polish:'powieść',pron:'/ˈnɒvəl/',cat:'vocab'},
-    {english:'on-demand TV',polish:'telewizja na żądanie',pron:'/ɒn dɪˈmɑːnd ˌtiːˈviː/',cat:'vocab'},
-    {english:'period drama',polish:'historyczny serial',pron:'/ˈpɪəriəd ˈdraːmə/',cat:'vocab'},
-    {english:'plot',polish:'fabuła',pron:'/plɒt/',cat:'vocab'},
-    {english:'reality TV',polish:'reality TV',pron:'/riˈæləti ˌtiːˈviː/',cat:'vocab'},
-    {english:'romantic comedy',polish:'komedia romantyczna',pron:'/rəʊˌmæntɪk ˈkɒmədi/',cat:'vocab'},
-    {english:'science fiction',polish:'fantastyka naukowa',pron:'/ˈsaɪəns ˈfɪkʃn/',cat:'vocab'},
-    {english:'script',polish:'scenariusz',pron:'/skrɪpt/',cat:'vocab'},
-    {english:'setting',polish:'sceneria, miejsce akcji',pron:'/ˈsetɪŋ/',cat:'vocab'},
-    {english:'sitcom',polish:'serial komediowy',pron:'/ˈsɪtkɒm/',cat:'vocab'},
-    {english:'soap (opera)',polish:'opera mydlana, telenowela',pron:'/səʊp ˈɒprə/',cat:'vocab'},
-    {english:'soundtrack',polish:'ścieżka dźwiękowa',pron:'/ˈsaʊndtræk/',cat:'vocab'},
-    {english:'special effects',polish:'efekty specjalne',pron:'/ˌspeʃl ɪˈfekts/',cat:'vocab'},
-    {english:'talent show',polish:'program z talentami',pron:'/ˈtælənt ʃəʊ/',cat:'vocab'},
-    {english:'telly',polish:'telewizja',pron:'/ˈteli/',cat:'vocab'},
-    {english:'thriller',polish:'dreszczowiec, thriller',pron:'/ˈθrɪlə/',cat:'vocab'},
-    {english:'travel show',polish:'program podróżniczy',pron:'/ˈtrævəl ʃəʊ/',cat:'vocab'},
-    {english:'TV series',polish:'serial telewizyjny',pron:'/ˌtiːˈviː ˈsɪəriːz/',cat:'vocab'},
-    {english:'weakness',polish:'słabość',pron:'/ˈwiːknəs/',cat:'vocab'},
-    {english:'weather forecast',polish:'prognoza pogody',pron:'/ˈweðə ˈfɔːkɑːst/',cat:'vocab'},
+    // ══ 4.1 VOCABULARY ══
+    {english:'basement',polish:'piwnica',pron:'/ˈbeɪsmənt/',cat:'vocab'},
+    {english:'bedside table',polish:'stolik nocny',pron:'/ˈbedsaɪd ˈteɪbl/',cat:'vocab'},
+    {english:'block of flats',polish:'blok mieszkalny',pron:'/blɒk əv ˈflæts/',cat:'vocab'},
+    {english:'bookcase',polish:'regał na książki',pron:'/ˈbʊkkeɪs/',cat:'vocab'},
+    {english:'brick',polish:'cegła',pron:'/brɪk/',cat:'vocab'},
+    {english:'bungalow',polish:'dom parterowy',pron:'/ˈbʌŋɡələʊ/',cat:'vocab'},
+    {english:'carpet',polish:'dywan',pron:'/ˈkɑːpɪt/',cat:'vocab'},
+    {english:'chest of drawers',polish:'komoda',pron:'/ˈtʃest əv ˈdrɔːz/',cat:'vocab'},
+    {english:'comfortable',polish:'wygodny',pron:'/ˈkʌmftəbl/',cat:'vocab'},
+    {english:'concrete',polish:'beton',pron:'/ˈkɒŋkriːt/',cat:'vocab'},
+    {english:'cooker',polish:'kuchenka',pron:'/ˈkʊkə/',cat:'vocab'},
+    {english:'cosy',polish:'przytulny',pron:'/ˈkəʊzi/',cat:'vocab'},
+    {english:'cottage',polish:'domek wiejski',pron:'/ˈkɒtɪdʒ/',cat:'vocab'},
+    {english:'cupboard',polish:'szafka',pron:'/ˈkʌbəd/',cat:'vocab'},
+    {english:'desk',polish:'biurko',pron:'/desk/',cat:'vocab'},
+    {english:'detached house',polish:'dom wolnostojący',pron:'/dɪˈtætʃt ˈhaʊs/',cat:'vocab'},
+    {english:'do the cooking',polish:'gotować',pron:'/ˌduː ðə ˈkʊkɪŋ/',cat:'vocab'},
+    {english:'do the gardening',polish:'pracować w ogrodzie',pron:'/ˌduː ðə ˈɡɑːdnɪŋ/',cat:'vocab'},
+    {english:'do the housework',polish:'wykonywać prace domowe',pron:'/ˌduː ðə ˈhaʊswɜːk/',cat:'vocab'},
+    {english:'do the ironing',polish:'prasować',pron:'/ˌduː ðə ˈaɪənɪŋ/',cat:'vocab'},
+    {english:'do the shopping',polish:'robić zakupy',pron:'/ˌduː ðə ˈʃɒpɪŋ/',cat:'vocab'},
+    {english:'do the washing',polish:'prać',pron:'/ˌduː ðə ˈwɒʃɪŋ/',cat:'vocab'},
+    {english:'do the washing-up',polish:'zmywać',pron:'/ˌduː ðə ˌwɒʃɪŋ ˈʌp/',cat:'vocab'},
+    {english:'do your homework',polish:'odrabiać zadanie domowe',pron:'/ˌduː jɔː ˈhəʊmwɜːk/',cat:'vocab'},
+    {english:'downstairs',polish:'na dole',pron:'/ˌdaʊnˈsteəz/',cat:'vocab'},
+    {english:'fridge',polish:'lodówka',pron:'/frɪdʒ/',cat:'vocab'},
+    {english:'front door',polish:'drzwi frontowe',pron:'/ˌfrʌnt ˈdɔː/',cat:'vocab'},
+    {english:'glass',polish:'szkło',pron:'/ɡlɑːs/',cat:'vocab'},
+    {english:'in a village',polish:'w wiosce',pron:'/ˌɪn ə ˈvɪlɪdʒ/',cat:'vocab'},
+    {english:'in the city centre',polish:'w centrum miasta',pron:'/ˌɪn ðə ˌsɪti ˈsentə/',cat:'vocab'},
+    {english:'in the countryside',polish:'na wsi',pron:'/ˌɪn ðə ˈkʌntrisaɪd/',cat:'vocab'},
+    {english:'in the suburbs',polish:'na przedmieściach',pron:'/ˌɪn ðə ˈsʌbɜːbz/',cat:'vocab'},
+    {english:'interior wall',polish:'ściana działowa',pron:'/ɪnˈtɪəriə ˈwɔːl/',cat:'vocab'},
+    {english:'kitchen sink',polish:'zlew kuchenny',pron:'/ˌkɪtʃn ˈsɪŋk/',cat:'vocab'},
+    {english:'ladder',polish:'drabina',pron:'/ˈlædə/',cat:'vocab'},
+    {english:'make a complaint',polish:'złożyć zażalenie',pron:'/ˌmeɪk ə kəmˈpleɪnt/',cat:'vocab'},
+    {english:'make a decision',polish:'podjąć decyzję',pron:'/ˌmeɪk ə dɪˈsɪʒn/',cat:'vocab'},
+    {english:'make a mess',polish:'zrobić bałagan',pron:'/ˌmeɪk ə ˈmes/',cat:'vocab'},
+    {english:'make a noise',polish:'hałasować',pron:'/ˌmeɪk ə ˈnɔɪz/',cat:'vocab'},
+    {english:'make dinner',polish:'ugotować obiad',pron:'/ˌmeɪk ˈdɪnə/',cat:'vocab'},
+    {english:'make your bed',polish:'pościelić łóżko',pron:'/ˌmeɪk jɔː ˈbed/',cat:'vocab'},
+    {english:'metal',polish:'metal',pron:'/ˈmetl/',cat:'vocab'},
+    {english:'modern',polish:'nowoczesny',pron:'/ˈmɒdn/',cat:'vocab'},
+    {english:'narrow',polish:'wąski',pron:'/ˈnærəʊ/',cat:'vocab'},
+    {english:'natural light',polish:'naturalne światło',pron:'/ˌnætʃərəl ˈlaɪt/',cat:'vocab'},
+    {english:'near the sea',polish:'blisko morza',pron:'/ˌnɪə ðə ˈsiː/',cat:'vocab'},
+    {english:'neighbour',polish:'sąsiad',pron:'/ˈneɪbə/',cat:'vocab'},
+    {english:'on a housing estate',polish:'na osiedlu',pron:'/ˌɒn ə ˈhaʊzɪŋ ɪˌsteɪt/',cat:'vocab'},
+    {english:'on the edge of the city',polish:'na obrzeżach miasta',pron:'/ˌɒn ði ˌedʒ əv ðə ˈsɪti/',cat:'vocab'},
+    {english:'on the first floor',polish:'na pierwszym piętrze',pron:'/ˌɒn ðə ˌfɜːst ˈflɔː/',cat:'vocab'},
+    {english:'on the ground floor',polish:'na parterze',pron:'/ˌɒn ðə ˌɡraʊnd ˈflɔː/',cat:'vocab'},
+    {english:'on the second floor',polish:'na drugim piętrze',pron:'/ˌɒn ðə ˌsekənd ˈflɔː/',cat:'vocab'},
+    {english:'on the top floor',polish:'na najwyższym piętrze',pron:'/ˌɒn ðə ˌtɒp ˈflɔː/',cat:'vocab'},
+    {english:'open-plan',polish:'bez ścianek działowych',pron:'/ˌəʊpən ˈplæn/',cat:'vocab'},
+    {english:'radiator',polish:'kaloryfer',pron:'/ˈreɪdieɪtə/',cat:'vocab'},
+    {english:'semi-detached house',polish:'dom bliźniaczy, bliźniak',pron:'/ˌsemidɪˌtætʃt ˈhaʊs/',cat:'vocab'},
+    {english:'shelf',polish:'półka',pron:'/ʃelf/',cat:'vocab'},
+    {english:'spacious',polish:'przestronny',pron:'/ˈspeɪʃəs/',cat:'vocab'},
+    {english:'stairs',polish:'schody',pron:'/steəz/',cat:'vocab'},
+    {english:'stone',polish:'kamień',pron:'/stəʊn/',cat:'vocab'},
+    {english:'terraced house',polish:'dom szeregowy',pron:'/ˌterəst ˈhaʊs/',cat:'vocab'},
+    {english:'traditional',polish:'tradycyjny',pron:'/trəˈdɪʃənəl/',cat:'vocab'},
+    {english:'upstairs',polish:'na piętrze',pron:'/ˌʌpˈsteəz/',cat:'vocab'},
+    {english:'wardrobe',polish:'szafa na ubrania',pron:'/ˈwɔːdrəʊb/',cat:'vocab'},
+    {english:'wide',polish:'szeroki',pron:'/waɪd/',cat:'vocab'},
+    {english:'wood',polish:'drewno',pron:'/wʊd/',cat:'vocab'},
+    {english:'wooden floor',polish:'drewniana podłoga',pron:'/ˌwʊdn ˈflɔː/',cat:'vocab'},
 
-    // ══ 3.2 GRAMMAR ══
-    {english:'best-selling',polish:'bestsellerowy, bijący rekordy popularności',pron:'/ˌbestˈselɪŋ/',cat:'grammar'},
-    {english:'busy',polish:'zatłoczony',pron:'/ˈbɪzi/',cat:'grammar'},
-    {english:'play',polish:'nagrywać (płytę)',pron:'/pleɪ/',cat:'grammar'},
-    {english:'record',polish:'nagrywać, rekord',pron:'/rɪˈkɔːd/',cat:'grammar'},
-    {english:'vocal range',polish:'skala głosu',pron:'/ˈvəʊkl reɪndʒ/',cat:'grammar'},
+    // ══ 4.2 + 4.5 GRAMMAR ══
+    {english:'accommodation',polish:'zakwaterowanie',pron:'/əˌkɒməˈdeɪʃn/',cat:'grammar'},
+    {english:'community',polish:'społeczność',pron:'/kəˈmjuːnəti/',cat:'grammar'},
+    {english:'couch',polish:'kanapa',pron:'/kaʊtʃ/',cat:'grammar'},
+    {english:'feel at home',polish:'czuć się jak w domu',pron:'/ˌfiːl ət ˈhəʊm/',cat:'grammar'},
+    {english:'feel homesick',polish:'tęsknić za domem',pron:'/ˌfiːl ˈhəʊmsɪk/',cat:'grammar'},
+    {english:'free',polish:'darmowy, bezpłatny',pron:'/friː/',cat:'grammar'},
+    {english:'host',polish:'gospodarz',pron:'/həʊst/',cat:'grammar'},
+    {english:'houseboat',polish:'łódź mieszkalna',pron:'/ˈhaʊsbəʊt/',cat:'grammar'},
+    {english:'luxury',polish:'luksusowy',pron:'/ˈlʌkʃəri/',cat:'grammar'},
+    {english:'member',polish:'przedstawiciel, członek',pron:'/ˈmembə/',cat:'grammar'},
+    {english:'neighbourhood',polish:'okolica',pron:'/ˈneɪbəhʊd/',cat:'grammar'},
+    {english:'studio apartment',polish:'kawalerka',pron:'/ˈstjuːdiəʊ əˌpɑːtmənt/',cat:'grammar'},
+    {english:'ceiling',polish:'sufit',pron:'/ˈsiːlɪŋ/',cat:'grammar'},
+    {english:'house-warming party',polish:'parapetówka',pron:'/ˈhaʊswɔːmɪŋ ˌpɑːti/',cat:'grammar'},
+    {english:'sheet',polish:'prześcieradło',pron:'/ʃiːt/',cat:'grammar'},
+    {english:'warn',polish:'ostrzegać',pron:'/wɔːn/',cat:'grammar'},
+    {english:'dress up as',polish:'przebierać się za',pron:'/ˌdres ˈʌp əz/',cat:'grammar'},
 
-    // ══ 3.3 LISTENING ══
-    {english:'art gallery',polish:'galeria sztuki',pron:'/ɑːt ˈɡæləri/',cat:'listen'},
-    {english:'at a museum',polish:'w muzeum',pron:'/ət ə mjuˈziːəm/',cat:'listen'},
-    {english:'black and white',polish:'czarno-biały',pron:'/blæk ənd waɪt/',cat:'listen'},
-    {english:'classic oil painting',polish:'klasyczne malarstwo olejne',pron:'/ˈklæsɪk ɔɪl ˈpeɪntɪŋ/',cat:'listen'},
-    {english:'colour',polish:'kolorowy, kolor',pron:'/ˈkʌlə/',cat:'listen'},
-    {english:'editor',polish:'redaktor',pron:'/ˈedɪtə/',cat:'listen'},
-    {english:'exhibition',polish:'wystawa',pron:'/ˌeksɪˈbɪʃn/',cat:'listen'},
-    {english:'landscape',polish:'pejzaż, krajobraz',pron:'/ˈlændskeɪp/',cat:'listen'},
-    {english:'modern abstract painting',polish:'malarstwo abstrakcyjne',pron:'/ˈmɒdn ˈæbstrækt ˈpeɪntɪŋ/',cat:'listen'},
-    {english:'ordinary',polish:'zwykły, przeciętny',pron:'/ˈɔːdnri/',cat:'listen'},
-    {english:'painter',polish:'malarz',pron:'/ˈpeɪntə/',cat:'listen'},
-    {english:'paste on buildings',polish:'przyklejać do ścian budynków',pron:'/peɪst ɒn ˈbɪldɪŋz/',cat:'listen'},
-    {english:'photo/photograph',polish:'zdjęcie, fotografia',pron:'/ˈfəʊtəɡrɑːf/',cat:'listen'},
-    {english:'photography',polish:'fotografia',pron:'/fəˈtɒɡrəfi/',cat:'listen'},
-    {english:'portrait',polish:'portret',pron:'/ˈpɔːtrɪt/',cat:'listen'},
-    {english:'public place',polish:'miejsce publiczne',pron:'/ˈpʌblɪk pleɪs/',cat:'listen'},
-    {english:'sculptor',polish:'rzeźbiarz',pron:'/ˈskʌlptə/',cat:'listen'},
-    {english:'sculpture',polish:'rzeźba',pron:'/ˈskʌlptʃə/',cat:'listen'},
-    {english:'slum',polish:'slumsy, dzielnica nędzy',pron:'/slʌm/',cat:'listen'},
-    {english:'street art',polish:'sztuka uliczna',pron:'/striːt ɑːt/',cat:'listen'},
+    // ══ 4.3 LISTENING ══
+    {english:'come round',polish:'przyjść w odwiedziny',pron:'/ˌkʌm ˈraʊnd/',cat:'listen'},
+    {english:'get away from',polish:'uciec od',pron:'/ˌɡet əˈweɪ frəm/',cat:'listen'},
+    {english:'keep sb out',polish:'nie wpuszczać kogoś',pron:'/ˌkiːp ˌsʌmbədi ˈaʊt/',cat:'listen'},
+    {english:'lamp',polish:'lampa',pron:'/læmp/',cat:'listen'},
+    {english:'let sb in',polish:'wpuścić kogoś do środka',pron:'/ˌlet ˌsʌmbədi ˈɪn/',cat:'listen'},
+    {english:'shell',polish:'muszla',pron:'/ʃel/',cat:'listen'},
+    {english:'souvenir',polish:'pamiątka',pron:'/ˌsuːvəˈnɪə/',cat:'listen'},
+    {english:'stay in',polish:'zostać w domu',pron:'/ˌsteɪ ˈɪn/',cat:'listen'},
 
-    // ══ 3.4 READING ══
-    {english:'A-list actors',polish:'najlepiej opłacani aktorzy',pron:'/ˈeɪ lɪst ˈæktəz/',cat:'reading'},
-    {english:'anger',polish:'gniew, złość',pron:'/ˈæŋɡə/',cat:'reading'},
-    {english:'autobiography',polish:'autobiografia',pron:'/ˌɔːtəbaɪˈɒɡrəfi/',cat:'reading'},
-    {english:'biography',polish:'biografia',pron:'/baɪˈɒɡrəfi/',cat:'reading'},
-    {english:'blockbuster',polish:'przebój (książka lub film)',pron:'/ˈblɒkˌbʌstə/',cat:'reading'},
-    {english:'box office',polish:'kasa kinowa, teatralna',pron:'/ˈbɒks ˌɒfɪs/',cat:'reading'},
-    {english:'bully',polish:'znęcać się',pron:'/ˈbʊli/',cat:'reading'},
-    {english:'cause',polish:'powodować',pron:'/kɔːz/',cat:'reading'},
-    {english:'classic novel',polish:'powieść klasyczna',pron:'/ˌklæsɪk ˈnɒvəl/',cat:'reading'},
-    {english:'come out',polish:'wychodzić, pojawiać się na ekranach kin',pron:'/ˌkʌm ˈaʊt/',cat:'reading'},
-    {english:'comic book',polish:'komiks',pron:'/ˈkɒmɪk bʊk/',cat:'reading'},
-    {english:'computer-generated images',polish:'obrazy wytworzone komputerowo',pron:'/kəmˌpjuːtə ˈdʒenəreɪtɪd ˈɪmɪdʒɪz/',cat:'reading'},
-    {english:'cope with',polish:'radzić sobie',pron:'/kəʊp wɪð/',cat:'reading'},
-    {english:'crime novel',polish:'powieść kryminalna',pron:'/ˈkraɪm ˌnɒvəl/',cat:'reading'},
-    {english:'dedicate yourself to sth',polish:'poświęcać się czemuś',pron:'/ˈdedɪkeɪt jəˈself/',cat:'reading'},
-    {english:'destruction',polish:'zniszczenie',pron:'/dɪˈstrʌkʃn/',cat:'reading'},
-    {english:'escapism',polish:'eskapizm',pron:'/ɪˈskeɪpɪzm/',cat:'reading'},
-    {english:'fairy tale',polish:'bajka',pron:'/ˈfeəri teɪl/',cat:'reading'},
-    {english:'fantasy novel',polish:'powieść fantasy',pron:'/ˈfæntəsi ˌnɒvəl/',cat:'reading'},
-    {english:'find out',polish:'dowiedzieć się',pron:'/ˌfaɪnd ˈaʊt/',cat:'reading'},
-    {english:'genre',polish:'gatunek (np. literacki)',pron:'/ˈʒɒnrə/',cat:'reading'},
-    {english:'give something up',polish:'zrezygnować z czegoś',pron:'/ɡɪv ˈsʌmθɪŋ ʌp/',cat:'reading'},
-    {english:'have X-ray vision',polish:'mieć rentgen w oczach',pron:'/hæv ˈeks reɪ ˈvɪʒn/',cat:'reading'},
-    {english:'historical fiction',polish:'beletrystyka historyczna',pron:'/hɪˌstɒrɪkl ˈfɪkʃn/',cat:'reading'},
-    {english:'innocent',polish:'niewinny',pron:'/ˈɪnəsnt/',cat:'reading'},
-    {english:'invisible',polish:'niewidzialny',pron:'/ɪnˈvɪzɪbl/',cat:'reading'},
-    {english:'loss',polish:'strata',pron:'/lɒs/',cat:'reading'},
-    {english:'poem',polish:'wiersz',pron:'/ˈpəʊɪm/',cat:'reading'},
-    {english:'purpose',polish:'cel',pron:'/ˈpɜːpəs/',cat:'reading'},
-    {english:'reject',polish:'odrzucić',pron:'/rɪˈdʒekt/',cat:'reading'},
-    {english:'relate to',polish:'utożsamiać się z',pron:'/rɪˈleɪt tuː/',cat:'reading'},
-    {english:'scene',polish:'scena (fragment utworu)',pron:'/siːn/',cat:'reading'},
-    {english:'short story',polish:'opowiadanie',pron:'/ˌʃɔːt ˈstɔːri/',cat:'reading'},
-    {english:'stand up for',polish:'ująć się za',pron:'/ˌstænd ˈʌp fə/',cat:'reading'},
-    {english:'take on (a role)',polish:'przyjąć (rolę)',pron:'/ˌteɪk ˈɒn/',cat:'reading'},
-    {english:'trailer',polish:'zwiastun',pron:'/ˈtreɪlə/',cat:'reading'},
-    {english:'weird',polish:'dziwaczny',pron:'/wɪəd/',cat:'reading'},
+    // ══ 4.4 READING ══
+    {english:'abandon',polish:'porzucać',pron:'/əˈbændən/',cat:'reading'},
+    {english:'ancient',polish:'starożytny',pron:'/ˈeɪnʃənt/',cat:'reading'},
+    {english:'attract',polish:'przyciągać',pron:'/əˈtrækt/',cat:'reading'},
+    {english:'breathtaking view',polish:'widok zapierający dech w piersiach',pron:'/ˌbreθteɪkɪŋ ˈvjuː/',cat:'reading'},
+    {english:'busy',polish:'ruchliwy, zatłoczony',pron:'/ˈbɪzi/',cat:'reading'},
+    {english:'camel',polish:'wielbłąd',pron:'/ˈkæməl/',cat:'reading'},
+    {english:'cave',polish:'jaskinia',pron:'/keɪv/',cat:'reading'},
+    {english:'crater',polish:'krater',pron:'/ˈkreɪtə/',cat:'reading'},
+    {english:'dense',polish:'gęsty',pron:'/dens/',cat:'reading'},
+    {english:'desert',polish:'pustynia',pron:'/ˈdezət/',cat:'reading'},
+    {english:'develop underwater vision',polish:'wykształcić umiejętność widzenia pod wodą',pron:'/dɪˈveləp ˌʌndəˌwɔːtə ˈvɪʒn/',cat:'reading'},
+    {english:'dry',polish:'suchy',pron:'/draɪ/',cat:'reading'},
+    {english:'electricity',polish:'energia elektryczna',pron:'/ɪˌlekˈtrɪsəti/',cat:'reading'},
+    {english:'historic monument',polish:'zabytek',pron:'/hɪˌstɒrɪk ˈmɒnjəmənt/',cat:'reading'},
+    {english:'hot springs',polish:'gorące źródła',pron:'/ˌhɒt ˈsprɪŋz/',cat:'reading'},
+    {english:'humid',polish:'wilgotny',pron:'/ˈhjuːmɪd/',cat:'reading'},
+    {english:'impressive',polish:'robiący wrażenie',pron:'/ɪmˈpresɪv/',cat:'reading'},
+    {english:'island',polish:'wyspa',pron:'/ˈaɪlənd/',cat:'reading'},
+    {english:'landscape',polish:'krajobraz',pron:'/ˈlændskeɪp/',cat:'reading'},
+    {english:'lush',polish:'bujny',pron:'/lʌʃ/',cat:'reading'},
+    {english:'mining',polish:'górnictwo',pron:'/ˈmaɪnɪŋ/',cat:'reading'},
+    {english:'mountain',polish:'góra',pron:'/ˈmaʊntən/',cat:'reading'},
+    {english:'move (house)',polish:'przeprowadzić się',pron:'/ˌmuːv ˈhaʊs/',cat:'reading'},
+    {english:'nomadic tribe',polish:'plemię koczownicze',pron:'/nəʊˌmædɪk ˈtraɪb/',cat:'reading'},
+    {english:'population',polish:'liczba ludności',pron:'/ˌpɒpjuˈleɪʃn/',cat:'reading'},
+    {english:'rainforest',polish:'las deszczowy',pron:'/ˈreɪnfɒrɪst/',cat:'reading'},
+    {english:'rock',polish:'skała',pron:'/rɒk/',cat:'reading'},
+    {english:'ruins',polish:'ruiny',pron:'/ˈruːɪnz/',cat:'reading'},
+    {english:'scorching',polish:'skwarny',pron:'/ˈskɔːtʃɪŋ/',cat:'reading'},
+    {english:'stilt',polish:'pal',pron:'/stɪlt/',cat:'reading'},
+    {english:'tourist destination',polish:'cel wycieczek turystycznych',pron:'/ˈtʊərɪst ˌdestɪˈneɪʃn/',cat:'reading'},
+    {english:'trading centre',polish:'centrum handlu',pron:'/ˈtreɪdɪŋ ˌsentə/',cat:'reading'},
+    {english:'traffic jam',polish:'korek uliczny',pron:'/ˈtræfɪk ˌdʒæm/',cat:'reading'},
+    {english:'treehouse',polish:'dom na drzewie',pron:'/ˈtriː haʊs/',cat:'reading'},
+    {english:'turquoise ocean',polish:'turkusowy ocean',pron:'/ˌtɜːkwɔɪz ˈəʊʃən/',cat:'reading'},
+    {english:'vegetation',polish:'roślinność',pron:'/ˌvedʒəˈteɪʃn/',cat:'reading'},
+    {english:'volcanic',polish:'wulkaniczny',pron:'/vɒlˈkænɪk/',cat:'reading'},
+    {english:'volcano',polish:'wulkan',pron:'/vɒlˈkeɪnəʊ/',cat:'reading'},
 
-    // ══ 3.5 GRAMMAR ══
-    {english:'music award',polish:'nagroda muzyczna',pron:'/ˈmjuːzɪk əˌwɔːd/',cat:'grammar'},
-    {english:'proper',polish:'prawdziwy',pron:'/ˈprɒpə/',cat:'grammar'},
-    {english:'the charts',polish:'lista przebojów',pron:'/ðə tʃɑːts/',cat:'grammar'},
+    // ══ 4.6 USE OF ENGLISH ══
+    {english:'a little/a bit/slightly',polish:'trochę, odrobinę, nieco',pron:'/ə ˈlɪtl/ə ˈbɪt/ˈslaɪtli/',cat:'english'},
+    {english:'badly',polish:'źle',pron:'/ˈbædli/',cat:'english'},
+    {english:'completely',polish:'zupełnie',pron:'/kəmˈpliːtli/',cat:'english'},
+    {english:'extremely',polish:'niezmiernie',pron:'/ɪkˈstriːmli/',cat:'english'},
+    {english:'luckily',polish:'na szczęście',pron:'/ˈlʌkɪli/',cat:'english'},
+    {english:'quite/rather/pretty',polish:'całkiem, dość',pron:'/kwaɪt/ˈrɑːðə/ˈprɪti/',cat:'english'},
+    {english:'really',polish:'naprawdę',pron:'/ˈrɪəli/',cat:'english'},
+    {english:'stay up',polish:'nie kłaść się spać',pron:'/ˌsteɪ ˈʌp/',cat:'english'},
+    {english:'unbelievably',polish:'niewiarygodnie',pron:'/ˌʌnbɪˈliːvəbli/',cat:'english'},
+    {english:'well',polish:'dobrze',pron:'/wel/',cat:'english'},
 
-    // ══ 3.6 USE OF ENGLISH ══
-    {english:'gig',polish:'występ, koncert',pron:'/ɡɪɡ/',cat:'english'},
-    {english:'perform',polish:'występować',pron:'/pəˈfɔːm/',cat:'english'},
-    {english:'put on (a play)',polish:'wystawiać (sztukę)',pron:'/ˌpʊt ˈɒn/',cat:'english'},
-    {english:'softly',polish:'cicho, delikatnie',pron:'/ˈsɒftli/',cat:'english'},
-    {english:'stage',polish:'scena (miejsce występu)',pron:'/steɪdʒ/',cat:'english'},
-    {english:'X-rated',polish:'tylko dla dorosłych',pron:'/ˈeks ˌreɪtɪd/',cat:'english'},
+    // ══ 4.7 WRITING ══
+    {english:'a must',polish:'rzecz obowiązkowa, konieczność',pron:'/ə ˈmʌst/',cat:'writing'},
+    {english:'according to',polish:'według',pron:'/əˈkɔːdɪŋ tə/',cat:'writing'},
+    {english:'architecture',polish:'architektura',pron:'/ˈɑːkɪtektʃə/',cat:'writing'},
+    {english:'attraction',polish:'atrakcja',pron:'/əˈtrækʃn/',cat:'writing'},
+    {english:'be famous for',polish:'być znanym z',pron:'/bi ˈfeɪməs fə/',cat:'writing'},
+    {english:'delicious',polish:'pyszny, wyśmienity',pron:'/dɪˈlɪʃəs/',cat:'writing'},
+    {english:'entertainment',polish:'rozrywka',pron:'/ˌentəˈteɪnmənt/',cat:'writing'},
+    {english:'historic site',polish:'historyczne miejsce',pron:'/hɪˌstɒrɪk ˈsaɪt/',cat:'writing'},
+    {english:'local speciality',polish:'miejscowa specjalność',pron:'/ˌləʊkl ˌspeʃiˈæləti/',cat:'writing'},
+    {english:'lovely',polish:'uroczy, cudowny, śliczny',pron:'/ˈlʌvli/',cat:'writing'},
+    {english:'nightlife',polish:'życie nocne',pron:'/ˈnaɪtlaɪf/',cat:'writing'},
+    {english:'on foot',polish:'pieszo',pron:'/ˌɒn ˈfʊt/',cat:'writing'},
+    {english:'recommend',polish:'polecać',pron:'/ˌrekəˈmend/',cat:'writing'},
+    {english:'selection of',polish:'asortyment, wybór',pron:'/səˈlekʃn əv/',cat:'writing'},
+    {english:'tend to',polish:'mieć w zwyczaju',pron:'/ˈtend tə/',cat:'writing'},
+    {english:'tourist highlight',polish:'główna atrakcja turystyczna',pron:'/ˈtʊərɪst ˈhaɪlaɪt/',cat:'writing'},
+    {english:'wonderful',polish:'cudowny',pron:'/ˈwʌndəfl/',cat:'writing'},
 
-    // ══ 3.7 WRITING ══
-    {english:'actually',polish:'właściwie',pron:'/ˈæktʃuəli/',cat:'writing'},
-    {english:'anyway',polish:'a tak w ogóle, a poza tym',pron:'/ˈeniweɪ/',cat:'writing'},
-    {english:'brush',polish:'pędzel',pron:'/brʌʃ/',cat:'writing'},
-    {english:'by the way',polish:'a tak przy okazji',pron:'/ˌbaɪ ðə ˈweɪ/',cat:'writing'},
-    {english:'disappointed',polish:'rozczarowany',pron:'/ˌdɪsəˈpɔɪntɪd/',cat:'writing'},
-    {english:'fail your driving test',polish:'oblać egzamin na prawo jazdy',pron:'/feɪl jə ˈdraɪvɪŋ test/',cat:'writing'},
-    {english:'fancy-dress party',polish:'bal przebierańców',pron:'/ˌfænsi ˈdres ˌpɑːti/',cat:'writing'},
-    {english:'Hope to see you',polish:'Mam nadzieję, że się zobaczymy',pron:'/həʊp tə ˈsiː jə/',cat:'writing'},
-    {english:'I have to say / In fact',polish:'Muszę przyznać / Rzeczywiście, faktycznie',pron:'/aɪ hæv tə ˈseɪ/',cat:'writing'},
-    {english:"I'm sorry to hear that",polish:'Przykro mi słyszeć, że',pron:"/aɪm ˈsɒri tə hɪə ðæt/",cat:'writing'},
-    {english:'improve',polish:'doskonalić',pron:'/ɪmˈpruːv/',cat:'writing'},
-    {english:'incidentally',polish:'nawiasem mówiąc',pron:'/ˌɪnsɪˈdentəli/',cat:'writing'},
-    {english:'paint',polish:'farba',pron:'/peɪnt/',cat:'writing'},
-    {english:'sympathy',polish:'współczucie',pron:'/ˈsɪmpəθi/',cat:'writing'},
-
-    // ══ 3.8 SPEAKING ══
-    {english:'in the background',polish:'w tle',pron:'/ɪn ðə ˈbækɡraʊnd/',cat:'speaking'},
-    {english:'in the foreground',polish:'na pierwszym planie',pron:'/ɪn ðə ˈfɔːɡraʊnd/',cat:'speaking'},
-    {english:'look bored/tired',polish:'wyglądać na znudzonego/zmęczonego',pron:'/lʊk bɔːd ˈtaɪəd/',cat:'speaking'},
-    {english:'pavement',polish:'chodnik',pron:'/ˈpeɪvmənt/',cat:'speaking'},
+    // ══ 4.8 SPEAKING ══
+    {english:'adult',polish:'dorosły',pron:'/ˈædʌlt/',cat:'speaking'},
+    {english:'castle',polish:'zamek',pron:'/ˈkɑːsl/',cat:'speaking'},
+    {english:'daily',polish:'codziennie, dzienne',pron:'/ˈdeɪli/',cat:'speaking'},
+    {english:'hill',polish:'wzgórze',pron:'/hɪl/',cat:'speaking'},
+    {english:'river',polish:'rzeka',pron:'/ˈrɪvə/',cat:'speaking'},
+    {english:'royal family',polish:'rodzina królewska',pron:'/ˌrɔɪəl ˈfæməli/',cat:'speaking'},
+    {english:'suitable',polish:'odpowiedni',pron:'/ˈsuːtəbl/',cat:'speaking'},
+    {english:'waterfront restaurant',polish:'restauracja nadbrzeżna (z widokiem na wodę)',pron:'/ˈwɔːtəfrʌnt ˈrestərɒnt/',cat:'speaking'},
 ];
 
 function loadData(){
@@ -647,7 +662,7 @@ function getSuccessRate(w){const t=w.correct+w.wrong;return t>0?Math.round(w.cor
 function shuffleArray(arr){const s=[...arr];for(let i=s.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];}return s;}
 
 function getCatLabel(cat){
-    const map={vocab:'3.1',grammar:'3.2/3.5',listen:'3.3',reading:'3.4',english:'3.6',writing:'3.7',speaking:'3.8',custom:'📝'};
+    const map={vocab:'4.1',grammar:'4.2/4.5',listen:'4.3',reading:'4.4',english:'4.6',writing:'4.7',speaking:'4.8',custom:'📝'};
     return map[cat]||'';
 }
 
