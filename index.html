@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏠 Home sweet home — English Vocabulary</title>
+    <title>🐟 Fish, seafood & meat — English Vocabulary</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -200,13 +200,9 @@
 
         /* Section badge */
         .section-badge { display: inline-block; font-size: 0.7em; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
-        .badge-vocab { background: #fce4ec; color: #c2185b; }
-        .badge-grammar { background: #e8eaf6; color: #3949ab; }
-        .badge-listen { background: #e0f2f1; color: #00695c; }
-        .badge-reading { background: #fff3e0; color: #e65100; }
-        .badge-english { background: #f3e5f5; color: #6a1b9a; }
-        .badge-writing { background: #e8f5e9; color: #2e7d32; }
-        .badge-speaking { background: #e3f2fd; color: #1565c0; }
+        .badge-fish { background: #e3f2fd; color: #1565c0; }
+        .badge-seafood { background: #fff3e0; color: #e65100; }
+        .badge-meat { background: #fce4ec; color: #c2185b; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -226,9 +222,9 @@
 <div class="container">
 
     <header class="site-header">
-        <span class="flag">🏠</span>
-        <h1>Home <span>sweet home</span></h1>
-        <p class="subtitle">Unit 4 · Sections 4.1–4.8 · Fiszki · Quizy · Aktywne przypominanie</p>
+        <span class="flag">🐟</span>
+        <h1>Fish, seafood <span>&amp; meat</span></h1>
+        <p class="subtitle">Fish · Seafood · Meat and offal · Fiszki · Quizy · Aktywne przypominanie</p>
     </header>
 
     <div id="addMode" class="card">
@@ -363,13 +359,9 @@
                     <span class="lbl">Kategoria słów</span>
                     <div style="display:flex;gap:8px;flex-wrap:wrap;" id="catBtns">
                         <button class="btn-outline cat-btn" data-cat="all" onclick="setCat(this)">Wszystkie</button>
-                        <button class="btn-outline cat-btn" data-cat="vocab" onclick="setCat(this)">🏠 4.1 Vocabulary</button>
-                        <button class="btn-outline cat-btn" data-cat="grammar" onclick="setCat(this)">📖 4.2+4.5 Grammar</button>
-                        <button class="btn-outline cat-btn" data-cat="listen" onclick="setCat(this)">🎧 4.3 Listening</button>
-                        <button class="btn-outline cat-btn" data-cat="reading" onclick="setCat(this)">📚 4.4 Reading</button>
-                        <button class="btn-outline cat-btn" data-cat="english" onclick="setCat(this)">🔤 4.6 Use of English</button>
-                        <button class="btn-outline cat-btn" data-cat="writing" onclick="setCat(this)">✍️ 4.7 Writing</button>
-                        <button class="btn-outline cat-btn" data-cat="speaking" onclick="setCat(this)">🗣️ 4.8 Speaking</button>
+                        <button class="btn-outline cat-btn" data-cat="fish" onclick="setCat(this)">🐟 Fish</button>
+                        <button class="btn-outline cat-btn" data-cat="seafood" onclick="setCat(this)">🦐 Seafood</button>
+                        <button class="btn-outline cat-btn" data-cat="meat" onclick="setCat(this)">🥩 Meat and offal</button>
                         <button class="btn-outline cat-btn" data-cat="custom" onclick="setCat(this)">📝 Moje słowa</button>
                     </div>
                 </div>
@@ -388,7 +380,7 @@
                 </div>
                 <div style="margin:16px 0 12px;">
                     <span class="lbl">Wypisz słowa z pamięci (po polsku lub po angielsku):</span>
-                    <textarea class="recall-input" id="rcInput" placeholder="Wpisz tutaj wszystkie słowa które pamiętasz…&#10;np: acting, aktor, animation, comedy…"></textarea>
+                    <textarea class="recall-input" id="rcInput" placeholder="Wpisz tutaj wszystkie słowa które pamiętasz…&#10;np: carp, karp, duck, kaczka, oyster…"></textarea>
                 </div>
                 <div style="display:flex;gap:10px;">
                     <button class="btn-primary" style="flex:1;padding:13px;" onclick="finishWrite()">✓ Gotowe — sprawdź wynik</button>
@@ -435,188 +427,47 @@
 /* ═══ MAIN APP ═══ */
 let words=[], unknownWords=[], currentIndex=0, currentMode='add', quizMode='', isFlipped=false, showUnknownOnly=false, shuffledWords=[];
 
-const WORDS_VERSION = 6;
+const WORDS_VERSION = 7;
 
-// ─── SŁOWNICTWO: 4.1–4.8 ───
+// ─── SŁOWNICTWO: FISH · SEAFOOD · MEAT AND OFFAL ───
 const initialWords=[
-    // ══ 4.1 VOCABULARY ══
-    {english:'basement',polish:'piwnica',pron:'/ˈbeɪsmənt/',cat:'vocab'},
-    {english:'bedside table',polish:'stolik nocny',pron:'/ˈbedsaɪd ˈteɪbl/',cat:'vocab'},
-    {english:'block of flats',polish:'blok mieszkalny',pron:'/blɒk əv ˈflæts/',cat:'vocab'},
-    {english:'bookcase',polish:'regał na książki',pron:'/ˈbʊkkeɪs/',cat:'vocab'},
-    {english:'brick',polish:'cegła',pron:'/brɪk/',cat:'vocab'},
-    {english:'bungalow',polish:'dom parterowy',pron:'/ˈbʌŋɡələʊ/',cat:'vocab'},
-    {english:'carpet',polish:'dywan',pron:'/ˈkɑːpɪt/',cat:'vocab'},
-    {english:'chest of drawers',polish:'komoda',pron:'/ˈtʃest əv ˈdrɔːz/',cat:'vocab'},
-    {english:'comfortable',polish:'wygodny',pron:'/ˈkʌmftəbl/',cat:'vocab'},
-    {english:'concrete',polish:'beton',pron:'/ˈkɒŋkriːt/',cat:'vocab'},
-    {english:'cooker',polish:'kuchenka',pron:'/ˈkʊkə/',cat:'vocab'},
-    {english:'cosy',polish:'przytulny',pron:'/ˈkəʊzi/',cat:'vocab'},
-    {english:'cottage',polish:'domek wiejski',pron:'/ˈkɒtɪdʒ/',cat:'vocab'},
-    {english:'cupboard',polish:'szafka',pron:'/ˈkʌbəd/',cat:'vocab'},
-    {english:'desk',polish:'biurko',pron:'/desk/',cat:'vocab'},
-    {english:'detached house',polish:'dom wolnostojący',pron:'/dɪˈtætʃt ˈhaʊs/',cat:'vocab'},
-    {english:'do the cooking',polish:'gotować',pron:'/ˌduː ðə ˈkʊkɪŋ/',cat:'vocab'},
-    {english:'do the gardening',polish:'pracować w ogrodzie',pron:'/ˌduː ðə ˈɡɑːdnɪŋ/',cat:'vocab'},
-    {english:'do the housework',polish:'wykonywać prace domowe',pron:'/ˌduː ðə ˈhaʊswɜːk/',cat:'vocab'},
-    {english:'do the ironing',polish:'prasować',pron:'/ˌduː ðə ˈaɪənɪŋ/',cat:'vocab'},
-    {english:'do the shopping',polish:'robić zakupy',pron:'/ˌduː ðə ˈʃɒpɪŋ/',cat:'vocab'},
-    {english:'do the washing',polish:'prać',pron:'/ˌduː ðə ˈwɒʃɪŋ/',cat:'vocab'},
-    {english:'do the washing-up',polish:'zmywać',pron:'/ˌduː ðə ˌwɒʃɪŋ ˈʌp/',cat:'vocab'},
-    {english:'do your homework',polish:'odrabiać zadanie domowe',pron:'/ˌduː jɔː ˈhəʊmwɜːk/',cat:'vocab'},
-    {english:'downstairs',polish:'na dole',pron:'/ˌdaʊnˈsteəz/',cat:'vocab'},
-    {english:'fridge',polish:'lodówka',pron:'/frɪdʒ/',cat:'vocab'},
-    {english:'front door',polish:'drzwi frontowe',pron:'/ˌfrʌnt ˈdɔː/',cat:'vocab'},
-    {english:'glass',polish:'szkło',pron:'/ɡlɑːs/',cat:'vocab'},
-    {english:'in a village',polish:'w wiosce',pron:'/ˌɪn ə ˈvɪlɪdʒ/',cat:'vocab'},
-    {english:'in the city centre',polish:'w centrum miasta',pron:'/ˌɪn ðə ˌsɪti ˈsentə/',cat:'vocab'},
-    {english:'in the countryside',polish:'na wsi',pron:'/ˌɪn ðə ˈkʌntrisaɪd/',cat:'vocab'},
-    {english:'in the suburbs',polish:'na przedmieściach',pron:'/ˌɪn ðə ˈsʌbɜːbz/',cat:'vocab'},
-    {english:'interior wall',polish:'ściana działowa',pron:'/ɪnˈtɪəriə ˈwɔːl/',cat:'vocab'},
-    {english:'kitchen sink',polish:'zlew kuchenny',pron:'/ˌkɪtʃn ˈsɪŋk/',cat:'vocab'},
-    {english:'ladder',polish:'drabina',pron:'/ˈlædə/',cat:'vocab'},
-    {english:'make a complaint',polish:'złożyć zażalenie',pron:'/ˌmeɪk ə kəmˈpleɪnt/',cat:'vocab'},
-    {english:'make a decision',polish:'podjąć decyzję',pron:'/ˌmeɪk ə dɪˈsɪʒn/',cat:'vocab'},
-    {english:'make a mess',polish:'zrobić bałagan',pron:'/ˌmeɪk ə ˈmes/',cat:'vocab'},
-    {english:'make a noise',polish:'hałasować',pron:'/ˌmeɪk ə ˈnɔɪz/',cat:'vocab'},
-    {english:'make dinner',polish:'ugotować obiad',pron:'/ˌmeɪk ˈdɪnə/',cat:'vocab'},
-    {english:'make your bed',polish:'pościelić łóżko',pron:'/ˌmeɪk jɔː ˈbed/',cat:'vocab'},
-    {english:'metal',polish:'metal',pron:'/ˈmetl/',cat:'vocab'},
-    {english:'modern',polish:'nowoczesny',pron:'/ˈmɒdn/',cat:'vocab'},
-    {english:'narrow',polish:'wąski',pron:'/ˈnærəʊ/',cat:'vocab'},
-    {english:'natural light',polish:'naturalne światło',pron:'/ˌnætʃərəl ˈlaɪt/',cat:'vocab'},
-    {english:'near the sea',polish:'blisko morza',pron:'/ˌnɪə ðə ˈsiː/',cat:'vocab'},
-    {english:'neighbour',polish:'sąsiad',pron:'/ˈneɪbə/',cat:'vocab'},
-    {english:'on a housing estate',polish:'na osiedlu',pron:'/ˌɒn ə ˈhaʊzɪŋ ɪˌsteɪt/',cat:'vocab'},
-    {english:'on the edge of the city',polish:'na obrzeżach miasta',pron:'/ˌɒn ði ˌedʒ əv ðə ˈsɪti/',cat:'vocab'},
-    {english:'on the first floor',polish:'na pierwszym piętrze',pron:'/ˌɒn ðə ˌfɜːst ˈflɔː/',cat:'vocab'},
-    {english:'on the ground floor',polish:'na parterze',pron:'/ˌɒn ðə ˌɡraʊnd ˈflɔː/',cat:'vocab'},
-    {english:'on the second floor',polish:'na drugim piętrze',pron:'/ˌɒn ðə ˌsekənd ˈflɔː/',cat:'vocab'},
-    {english:'on the top floor',polish:'na najwyższym piętrze',pron:'/ˌɒn ðə ˌtɒp ˈflɔː/',cat:'vocab'},
-    {english:'open-plan',polish:'bez ścianek działowych',pron:'/ˌəʊpən ˈplæn/',cat:'vocab'},
-    {english:'radiator',polish:'kaloryfer',pron:'/ˈreɪdieɪtə/',cat:'vocab'},
-    {english:'semi-detached house',polish:'dom bliźniaczy, bliźniak',pron:'/ˌsemidɪˌtætʃt ˈhaʊs/',cat:'vocab'},
-    {english:'shelf',polish:'półka',pron:'/ʃelf/',cat:'vocab'},
-    {english:'spacious',polish:'przestronny',pron:'/ˈspeɪʃəs/',cat:'vocab'},
-    {english:'stairs',polish:'schody',pron:'/steəz/',cat:'vocab'},
-    {english:'stone',polish:'kamień',pron:'/stəʊn/',cat:'vocab'},
-    {english:'terraced house',polish:'dom szeregowy',pron:'/ˌterəst ˈhaʊs/',cat:'vocab'},
-    {english:'traditional',polish:'tradycyjny',pron:'/trəˈdɪʃənəl/',cat:'vocab'},
-    {english:'upstairs',polish:'na piętrze',pron:'/ˌʌpˈsteəz/',cat:'vocab'},
-    {english:'wardrobe',polish:'szafa na ubrania',pron:'/ˈwɔːdrəʊb/',cat:'vocab'},
-    {english:'wide',polish:'szeroki',pron:'/waɪd/',cat:'vocab'},
-    {english:'wood',polish:'drewno',pron:'/wʊd/',cat:'vocab'},
-    {english:'wooden floor',polish:'drewniana podłoga',pron:'/ˌwʊdn ˈflɔː/',cat:'vocab'},
+    // ══ FISH ══
+    {english:'carp',polish:'karp',pron:'/kɑːp/',cat:'fish'},
+    {english:'mackerel',polish:'makrela',pron:'/ˈmækrəl/',cat:'fish'},
+    {english:'eel',polish:'węgorz',pron:'/iːl/',cat:'fish'},
+    {english:'pike',polish:'szczupak',pron:'/paɪk/',cat:'fish'},
+    {english:'herring',polish:'śledź',pron:'/ˈherɪŋ/',cat:'fish'},
+    {english:'cod',polish:'dorsz',pron:'/kɒd/',cat:'fish'},
+    {english:'salmon',polish:'łosoś',pron:'/ˈsæmən/',cat:'fish'},
+    {english:'trout',polish:'pstrąg',pron:'/traʊt/',cat:'fish'},
 
-    // ══ 4.2 + 4.5 GRAMMAR ══
-    {english:'accommodation',polish:'zakwaterowanie',pron:'/əˌkɒməˈdeɪʃn/',cat:'grammar'},
-    {english:'community',polish:'społeczność',pron:'/kəˈmjuːnəti/',cat:'grammar'},
-    {english:'couch',polish:'kanapa',pron:'/kaʊtʃ/',cat:'grammar'},
-    {english:'feel at home',polish:'czuć się jak w domu',pron:'/ˌfiːl ət ˈhəʊm/',cat:'grammar'},
-    {english:'feel homesick',polish:'tęsknić za domem',pron:'/ˌfiːl ˈhəʊmsɪk/',cat:'grammar'},
-    {english:'free',polish:'darmowy, bezpłatny',pron:'/friː/',cat:'grammar'},
-    {english:'host',polish:'gospodarz',pron:'/həʊst/',cat:'grammar'},
-    {english:'houseboat',polish:'łódź mieszkalna',pron:'/ˈhaʊsbəʊt/',cat:'grammar'},
-    {english:'luxury',polish:'luksusowy',pron:'/ˈlʌkʃəri/',cat:'grammar'},
-    {english:'member',polish:'przedstawiciel, członek',pron:'/ˈmembə/',cat:'grammar'},
-    {english:'neighbourhood',polish:'okolica',pron:'/ˈneɪbəhʊd/',cat:'grammar'},
-    {english:'studio apartment',polish:'kawalerka',pron:'/ˈstjuːdiəʊ əˌpɑːtmənt/',cat:'grammar'},
-    {english:'ceiling',polish:'sufit',pron:'/ˈsiːlɪŋ/',cat:'grammar'},
-    {english:'house-warming party',polish:'parapetówka',pron:'/ˈhaʊswɔːmɪŋ ˌpɑːti/',cat:'grammar'},
-    {english:'sheet',polish:'prześcieradło',pron:'/ʃiːt/',cat:'grammar'},
-    {english:'warn',polish:'ostrzegać',pron:'/wɔːn/',cat:'grammar'},
-    {english:'dress up as',polish:'przebierać się za',pron:'/ˌdres ˈʌp əz/',cat:'grammar'},
+    // ══ SEAFOOD ══
+    {english:'lobster',polish:'homar',pron:'/ˈlɒbstə/',cat:'seafood'},
+    {english:'king prawn',polish:'krewetka królewska',pron:'/ˌkɪŋ ˈprɔːn/',cat:'seafood'},
+    {english:'shellfish',polish:'skorupiaki, owoce morza',pron:'/ˈʃelfɪʃ/',cat:'seafood'},
+    {english:'crab',polish:'krab',pron:'/kræb/',cat:'seafood'},
+    {english:'octopus',polish:'ośmiornica',pron:'/ˈɒktəpəs/',cat:'seafood'},
+    {english:'crayfish',polish:'rak',pron:'/ˈkreɪfɪʃ/',cat:'seafood'},
+    {english:'oyster',polish:'ostryga',pron:'/ˈɔɪstə/',cat:'seafood'},
+    {english:'shrimp',polish:'krewetka',pron:'/ʃrɪmp/',cat:'seafood'},
 
-    // ══ 4.3 LISTENING ══
-    {english:'come round',polish:'przyjść w odwiedziny',pron:'/ˌkʌm ˈraʊnd/',cat:'listen'},
-    {english:'get away from',polish:'uciec od',pron:'/ˌɡet əˈweɪ frəm/',cat:'listen'},
-    {english:'keep sb out',polish:'nie wpuszczać kogoś',pron:'/ˌkiːp ˌsʌmbədi ˈaʊt/',cat:'listen'},
-    {english:'lamp',polish:'lampa',pron:'/læmp/',cat:'listen'},
-    {english:'let sb in',polish:'wpuścić kogoś do środka',pron:'/ˌlet ˌsʌmbədi ˈɪn/',cat:'listen'},
-    {english:'shell',polish:'muszla',pron:'/ʃel/',cat:'listen'},
-    {english:'souvenir',polish:'pamiątka',pron:'/ˌsuːvəˈnɪə/',cat:'listen'},
-    {english:'stay in',polish:'zostać w domu',pron:'/ˌsteɪ ˈɪn/',cat:'listen'},
-
-    // ══ 4.4 READING ══
-    {english:'abandon',polish:'porzucać',pron:'/əˈbændən/',cat:'reading'},
-    {english:'ancient',polish:'starożytny',pron:'/ˈeɪnʃənt/',cat:'reading'},
-    {english:'attract',polish:'przyciągać',pron:'/əˈtrækt/',cat:'reading'},
-    {english:'breathtaking view',polish:'widok zapierający dech w piersiach',pron:'/ˌbreθteɪkɪŋ ˈvjuː/',cat:'reading'},
-    {english:'busy',polish:'ruchliwy, zatłoczony',pron:'/ˈbɪzi/',cat:'reading'},
-    {english:'camel',polish:'wielbłąd',pron:'/ˈkæməl/',cat:'reading'},
-    {english:'cave',polish:'jaskinia',pron:'/keɪv/',cat:'reading'},
-    {english:'crater',polish:'krater',pron:'/ˈkreɪtə/',cat:'reading'},
-    {english:'dense',polish:'gęsty',pron:'/dens/',cat:'reading'},
-    {english:'desert',polish:'pustynia',pron:'/ˈdezət/',cat:'reading'},
-    {english:'develop underwater vision',polish:'wykształcić umiejętność widzenia pod wodą',pron:'/dɪˈveləp ˌʌndəˌwɔːtə ˈvɪʒn/',cat:'reading'},
-    {english:'dry',polish:'suchy',pron:'/draɪ/',cat:'reading'},
-    {english:'electricity',polish:'energia elektryczna',pron:'/ɪˌlekˈtrɪsəti/',cat:'reading'},
-    {english:'historic monument',polish:'zabytek',pron:'/hɪˌstɒrɪk ˈmɒnjəmənt/',cat:'reading'},
-    {english:'hot springs',polish:'gorące źródła',pron:'/ˌhɒt ˈsprɪŋz/',cat:'reading'},
-    {english:'humid',polish:'wilgotny',pron:'/ˈhjuːmɪd/',cat:'reading'},
-    {english:'impressive',polish:'robiący wrażenie',pron:'/ɪmˈpresɪv/',cat:'reading'},
-    {english:'island',polish:'wyspa',pron:'/ˈaɪlənd/',cat:'reading'},
-    {english:'landscape',polish:'krajobraz',pron:'/ˈlændskeɪp/',cat:'reading'},
-    {english:'lush',polish:'bujny',pron:'/lʌʃ/',cat:'reading'},
-    {english:'mining',polish:'górnictwo',pron:'/ˈmaɪnɪŋ/',cat:'reading'},
-    {english:'mountain',polish:'góra',pron:'/ˈmaʊntən/',cat:'reading'},
-    {english:'move (house)',polish:'przeprowadzić się',pron:'/ˌmuːv ˈhaʊs/',cat:'reading'},
-    {english:'nomadic tribe',polish:'plemię koczownicze',pron:'/nəʊˌmædɪk ˈtraɪb/',cat:'reading'},
-    {english:'population',polish:'liczba ludności',pron:'/ˌpɒpjuˈleɪʃn/',cat:'reading'},
-    {english:'rainforest',polish:'las deszczowy',pron:'/ˈreɪnfɒrɪst/',cat:'reading'},
-    {english:'rock',polish:'skała',pron:'/rɒk/',cat:'reading'},
-    {english:'ruins',polish:'ruiny',pron:'/ˈruːɪnz/',cat:'reading'},
-    {english:'scorching',polish:'skwarny',pron:'/ˈskɔːtʃɪŋ/',cat:'reading'},
-    {english:'stilt',polish:'pal',pron:'/stɪlt/',cat:'reading'},
-    {english:'tourist destination',polish:'cel wycieczek turystycznych',pron:'/ˈtʊərɪst ˌdestɪˈneɪʃn/',cat:'reading'},
-    {english:'trading centre',polish:'centrum handlu',pron:'/ˈtreɪdɪŋ ˌsentə/',cat:'reading'},
-    {english:'traffic jam',polish:'korek uliczny',pron:'/ˈtræfɪk ˌdʒæm/',cat:'reading'},
-    {english:'treehouse',polish:'dom na drzewie',pron:'/ˈtriː haʊs/',cat:'reading'},
-    {english:'turquoise ocean',polish:'turkusowy ocean',pron:'/ˌtɜːkwɔɪz ˈəʊʃən/',cat:'reading'},
-    {english:'vegetation',polish:'roślinność',pron:'/ˌvedʒəˈteɪʃn/',cat:'reading'},
-    {english:'volcanic',polish:'wulkaniczny',pron:'/vɒlˈkænɪk/',cat:'reading'},
-    {english:'volcano',polish:'wulkan',pron:'/vɒlˈkeɪnəʊ/',cat:'reading'},
-
-    // ══ 4.6 USE OF ENGLISH ══
-    {english:'a little/a bit/slightly',polish:'trochę, odrobinę, nieco',pron:'/ə ˈlɪtl/ə ˈbɪt/ˈslaɪtli/',cat:'english'},
-    {english:'badly',polish:'źle',pron:'/ˈbædli/',cat:'english'},
-    {english:'completely',polish:'zupełnie',pron:'/kəmˈpliːtli/',cat:'english'},
-    {english:'extremely',polish:'niezmiernie',pron:'/ɪkˈstriːmli/',cat:'english'},
-    {english:'luckily',polish:'na szczęście',pron:'/ˈlʌkɪli/',cat:'english'},
-    {english:'quite/rather/pretty',polish:'całkiem, dość',pron:'/kwaɪt/ˈrɑːðə/ˈprɪti/',cat:'english'},
-    {english:'really',polish:'naprawdę',pron:'/ˈrɪəli/',cat:'english'},
-    {english:'stay up',polish:'nie kłaść się spać',pron:'/ˌsteɪ ˈʌp/',cat:'english'},
-    {english:'unbelievably',polish:'niewiarygodnie',pron:'/ˌʌnbɪˈliːvəbli/',cat:'english'},
-    {english:'well',polish:'dobrze',pron:'/wel/',cat:'english'},
-
-    // ══ 4.7 WRITING ══
-    {english:'a must',polish:'rzecz obowiązkowa, konieczność',pron:'/ə ˈmʌst/',cat:'writing'},
-    {english:'according to',polish:'według',pron:'/əˈkɔːdɪŋ tə/',cat:'writing'},
-    {english:'architecture',polish:'architektura',pron:'/ˈɑːkɪtektʃə/',cat:'writing'},
-    {english:'attraction',polish:'atrakcja',pron:'/əˈtrækʃn/',cat:'writing'},
-    {english:'be famous for',polish:'być znanym z',pron:'/bi ˈfeɪməs fə/',cat:'writing'},
-    {english:'delicious',polish:'pyszny, wyśmienity',pron:'/dɪˈlɪʃəs/',cat:'writing'},
-    {english:'entertainment',polish:'rozrywka',pron:'/ˌentəˈteɪnmənt/',cat:'writing'},
-    {english:'historic site',polish:'historyczne miejsce',pron:'/hɪˌstɒrɪk ˈsaɪt/',cat:'writing'},
-    {english:'local speciality',polish:'miejscowa specjalność',pron:'/ˌləʊkl ˌspeʃiˈæləti/',cat:'writing'},
-    {english:'lovely',polish:'uroczy, cudowny, śliczny',pron:'/ˈlʌvli/',cat:'writing'},
-    {english:'nightlife',polish:'życie nocne',pron:'/ˈnaɪtlaɪf/',cat:'writing'},
-    {english:'on foot',polish:'pieszo',pron:'/ˌɒn ˈfʊt/',cat:'writing'},
-    {english:'recommend',polish:'polecać',pron:'/ˌrekəˈmend/',cat:'writing'},
-    {english:'selection of',polish:'asortyment, wybór',pron:'/səˈlekʃn əv/',cat:'writing'},
-    {english:'tend to',polish:'mieć w zwyczaju',pron:'/ˈtend tə/',cat:'writing'},
-    {english:'tourist highlight',polish:'główna atrakcja turystyczna',pron:'/ˈtʊərɪst ˈhaɪlaɪt/',cat:'writing'},
-    {english:'wonderful',polish:'cudowny',pron:'/ˈwʌndəfl/',cat:'writing'},
-
-    // ══ 4.8 SPEAKING ══
-    {english:'adult',polish:'dorosły',pron:'/ˈædʌlt/',cat:'speaking'},
-    {english:'castle',polish:'zamek',pron:'/ˈkɑːsl/',cat:'speaking'},
-    {english:'daily',polish:'codziennie, dzienne',pron:'/ˈdeɪli/',cat:'speaking'},
-    {english:'hill',polish:'wzgórze',pron:'/hɪl/',cat:'speaking'},
-    {english:'river',polish:'rzeka',pron:'/ˈrɪvə/',cat:'speaking'},
-    {english:'royal family',polish:'rodzina królewska',pron:'/ˌrɔɪəl ˈfæməli/',cat:'speaking'},
-    {english:'suitable',polish:'odpowiedni',pron:'/ˈsuːtəbl/',cat:'speaking'},
-    {english:'waterfront restaurant',polish:'restauracja nadbrzeżna (z widokiem na wodę)',pron:'/ˈwɔːtəfrʌnt ˈrestərɒnt/',cat:'speaking'},
+    // ══ MEAT AND OFFAL ══
+    {english:'mutton',polish:'baranina',pron:'/ˈmʌtn/',cat:'meat'},
+    {english:'duck',polish:'kaczka',pron:'/dʌk/',cat:'meat'},
+    {english:'lamb',polish:'jagnięcina',pron:'/læm/',cat:'meat'},
+    {english:'liver',polish:'wątróbka, wątroba',pron:'/ˈlɪvə/',cat:'meat'},
+    {english:'beef',polish:'wołowina',pron:'/biːf/',cat:'meat'},
+    {english:'lungs',polish:'płuca',pron:'/lʌŋz/',cat:'meat'},
+    {english:'pork',polish:'wieprzowina',pron:'/pɔːk/',cat:'meat'},
+    {english:'game',polish:'dziczyzna',pron:'/ɡeɪm/',cat:'meat'},
+    {english:'stomach',polish:'żołądek',pron:'/ˈstʌmək/',cat:'meat'},
+    {english:'goose',polish:'gęś',pron:'/ɡuːs/',cat:'meat'},
+    {english:'turkey',polish:'indyk',pron:'/ˈtɜːki/',cat:'meat'},
+    {english:'heart',polish:'serce',pron:'/hɑːt/',cat:'meat'},
+    {english:'rabbit',polish:'królik',pron:'/ˈræbɪt/',cat:'meat'},
+    {english:'chicken',polish:'kurczak',pron:'/ˈtʃɪkɪn/',cat:'meat'},
+    {english:'kidney',polish:'nerka',pron:'/ˈkɪdni/',cat:'meat'},
+    {english:'veal',polish:'cielęcina',pron:'/viːl/',cat:'meat'},
 ];
 
 function loadData(){
@@ -662,7 +513,7 @@ function getSuccessRate(w){const t=w.correct+w.wrong;return t>0?Math.round(w.cor
 function shuffleArray(arr){const s=[...arr];for(let i=s.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];}return s;}
 
 function getCatLabel(cat){
-    const map={vocab:'4.1',grammar:'4.2/4.5',listen:'4.3',reading:'4.4',english:'4.6',writing:'4.7',speaking:'4.8',custom:'📝'};
+    const map={fish:'Fish',seafood:'Seafood',meat:'Meat',custom:'📝'};
     return map[cat]||'';
 }
 
